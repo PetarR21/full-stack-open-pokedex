@@ -38,14 +38,14 @@ jobs:
         if: ${{ steps.deployment.outcome == 'success' }}
         uses: Ilshidur/action-discord@master
         with:
-          args: '🚀 Deployment successful! New version deployed to production.'
+          args: '🚀 Deployment by ${{ github.actor }} successful! New version deployed to production (${{secrets.DEPLOYMENT_URL}}).'
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Discord webhook (failed build)
         if: ${{ failure() }}
         uses: Ilshidur/action-discord@master
         with:
-          args: '❌ Deployment failed! Commit ${{ github.sha }} failed. Check the logs for details.'
+          args: '❌ Deployment failed! Commit https://github.com/${{ github.repository }}/commit/${{ github.sha }} by ${{ github.actor }} broke the build.'
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
 

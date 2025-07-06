@@ -34,10 +34,11 @@ jobs:
         id: deployment
         if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
         run: curl https://api.render.com/deploy/srv-${{secrets.RENDER_SERVICE_ID}}?key=${{secrets.RENDER_API_KEY}}
+      - name: Print hook
+        run: echo ${{secrets.DISCORD_WEBHOOK}}
       - name: Discord webhook (success)
         uses: rjstone/discord-webhook-notify@v2
         with:
-          run: ${{secrets.DISCORD_WEBHOOK}}
           webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
           text: to https://full-stack-open-pokedex-b7uy.onrender.com/ by petarr21
           severity: info

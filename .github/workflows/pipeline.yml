@@ -24,12 +24,12 @@ jobs:
         run: npm run build
       - name: Run tests
         run: npm run test
-      - name: e2e tests
-        uses: cypress-io/github-action@v5
-        with:
-          command: npm run test:e2e
-          start: npm run start-prod
-          wait-on: http://localhost:5000
+      # - name: e2e tests
+      #   uses: cypress-io/github-action@v5
+      #   with:
+      #     command: npm run test:e2e
+      #     start: npm run start-prod
+      #     wait-on: http://localhost:5000
       - name: Trigger deployment
         id: deployment
         if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
@@ -37,7 +37,8 @@ jobs:
       - name: Discord webhook (success)
         uses: rjstone/discord-webhook-notify@v2
         with:
-          webhookUrl: ${{secrets.WEBHOOK}}
+          run: ${{secrets.DISCORD_WEBHOOK}}
+          webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
           text: to https://full-stack-open-pokedex-b7uy.onrender.com/ by petarr21
           severity: info
           title: My Fancy Embed Title

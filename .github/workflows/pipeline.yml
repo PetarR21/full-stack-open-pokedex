@@ -34,17 +34,12 @@ jobs:
         id: deployment
         if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
         run: curl https://api.render.com/deploy/srv-${{secrets.RENDER_SERVICE_ID}}?key=${{secrets.RENDER_API_KEY}}
-      - name: Print hook
-        run: echo ${{secrets.DISCORD_WEBHOOK}}
       - name: Discord webhook (success)
-        uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
-          webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
-          text: to https://full-stack-open-pokedex-b7uy.onrender.com/ by petarr21
-          severity: info
-          title: My Fancy Embed Title
-          description: 'This is a ***SuPeR custom*** description. I hope it looks good.'
-          footer: This embed was brought to you by the letter R and the number 4.
+          args: 'The project {{ EVENT_PAYLOAD.repository.full_name }} has been deployed.'
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-latest

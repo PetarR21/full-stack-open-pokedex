@@ -21,7 +21,7 @@ jobs:
       - name: Check style
         run: npm run eslint
       - name: Build project
-        run: npm run build
+        run: npm run buildd
       - name: Run tests
         run: npm run test
       # - name: e2e tests
@@ -38,7 +38,7 @@ jobs:
         if: ${{ steps.deployment.outcome == 'success' }}
         uses: Ilshidur/action-discord@master
         with:
-          args: '🚀 Deployment successful! New version deployed to production.'
+          args: '🚀 Deployment by petarr21 successful! New version deployed to production (${{secrets.DEPLOYMENT_URL}}).'
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Discord webhook (failed build)

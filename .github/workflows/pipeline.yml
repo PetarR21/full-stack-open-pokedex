@@ -37,7 +37,7 @@ jobs:
       - name: Print hook
         run: echo ${{secrets.DISCORD_WEBHOOK}}
       - name: Discord webhook (success)
-        uses: rjstone/discord-webhook-notify@v2
+        uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
         with:
           webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
           text: to https://full-stack-open-pokedex-b7uy.onrender.com/ by petarr21
